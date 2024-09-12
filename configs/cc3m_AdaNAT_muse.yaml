@@ -1,0 +1,53 @@
+gen_type: muse
+seed: 1234
+z_shape: [8, 16, 16]
+autoencoder:
+  config_file: 'vq-f16-jax.yaml'
+train:
+  n_steps: 999999999
+  batch_size: 2048
+  log_interval: 50
+  eval_interval: 5000
+  save_interval: 5000
+  fid_interval: 50000
+eval:
+  n_samples: 10000
+  sample_steps: 18
+optimizer:
+  name: 'adamw'
+  lr: 0.0004
+  weight_decay: 0.03
+  betas: [0.99, 0.99]
+lr_scheduler:
+  name: 'customized'
+  warmup_steps: 5000
+nnet:
+  name: 'uvit_t2i_vq'
+  img_size: 16
+  codebook_size: 1024
+  in_chans: 4
+  embed_dim: 1152
+  clip_dim: 1280
+  depth: 28
+  num_heads: 16
+  mlp_ratio: 4
+  qkv_bias: False
+  use_checkpoint: False
+  skip: True
+dataset:
+  name: 'cc256_features'
+  path: 'assets/cc3m_256_vq_features'
+  cfg: True
+  p_uncond: 0.15
+muse:
+  ignore_ind: -1
+  smoothing: 0.1
+  gen_temp: 4.5
+sample:
+  sample_steps: 18
+  n_samples: 30000
+  mini_batch_size: 50
+  cfg: True
+  linear_inc_scale: True
+  scale: 10.0
+  path: ''
